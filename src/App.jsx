@@ -206,7 +206,7 @@ function QuizScreen({ t, category, round, onFinish }) {
   // Keys 1–4 pick an option while the question is open.
   useEffect(() => {
     const onKey = (e) => {
-      if (answered || e.altKey || e.ctrlKey || e.metaKey) return
+      if (answered || e.repeat || e.altKey || e.ctrlKey || e.metaKey) return
       const n = Number(e.key)
       if (Number.isInteger(n) && n >= 1 && n <= question.options.length) {
         e.preventDefault()
@@ -227,7 +227,11 @@ function QuizScreen({ t, category, round, onFinish }) {
 
   const goNext = () => {
     if (isLast) onFinish(answers)
-    else setIndex((i) => i + 1)
+    else {
+      // Reset first so the next question never renders with the previous countdown.
+      setRemaining(SECONDS_PER_QUESTION)
+      setIndex((i) => i + 1)
+    }
   }
 
   const progress = ((index + (answered ? 1 : 0)) / round.length) * 100
