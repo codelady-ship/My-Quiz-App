@@ -9,7 +9,7 @@ export const UI = {
     category: 'Kateqoriya',
     categories: { html: 'HTML', css: 'CSS', javascript: 'JavaScript', react: 'React' },
     best: (n, total) => `Rekord: ${n}/${total}`,
-    noBest: 'Hələ oynanılmayıb',
+    noBest: 'Hələ oynanmayıb',
     start: 'Başla',
     question: (n, total) => `Sual ${n} / ${total}`,
     score: (n) => `Xal: ${n}`,

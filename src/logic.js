@@ -56,10 +56,13 @@ export function wrongAnswers(round, answers) {
     .filter((r) => !r.ok)
 }
 
-/** Returns a new best-score map and whether `score` beat the previous best. */
+/**
+ * Returns a new best-score map and whether `score` beat the previous best.
+ * With no previous best the baseline is 0, so a 0/10 round is not a "new best".
+ */
 export function updateBest(best, category, score) {
   const previous = best[category]
-  const isNew = typeof previous !== 'number' || score > previous
+  const isNew = score > (typeof previous === 'number' ? previous : 0)
   return { best: isNew ? { ...best, [category]: score } : best, isNew }
 }
 

@@ -45,7 +45,7 @@ export const QUESTIONS = {
     {
       id: 'html-6',
       a: 1,
-      az: { q: 'Form sahəsini doldurulması məcburi edən atribut hansıdır?', o: ['checked', 'required', 'readonly', 'placeholder'] },
+      az: { q: 'Form sahəsinin doldurulmasını məcburi edən atribut hansıdır?', o: ['checked', 'required', 'readonly', 'placeholder'] },
       en: { q: 'Which attribute makes a form field mandatory?', o: ['checked', 'required', 'readonly', 'placeholder'] },
     },
     {
@@ -57,7 +57,7 @@ export const QUESTIONS = {
     {
       id: 'html-8',
       a: 3,
-      az: { q: 'Keçidi yeni vərəqdə açmaq üçün <a> teqinə nə əlavə edilir?', o: ['rel="new"', 'href="_new"', 'open="tab"', 'target="_blank"'] },
+      az: { q: 'Keçidi yeni tabda açmaq üçün <a> teqinə nə əlavə edilir?', o: ['rel="new"', 'href="_new"', 'open="tab"', 'target="_blank"'] },
       en: { q: 'What do you add to an <a> tag to open the link in a new tab?', o: ['rel="new"', 'href="_new"', 'open="tab"', 'target="_blank"'] },
     },
     {
@@ -102,7 +102,7 @@ export const QUESTIONS = {
     {
       id: 'css-2',
       a: 1,
-      az: { q: '"box" klası olan elementləri hansı selektor seçir?', o: ['#box', '.box', 'box', '*box'] },
+      az: { q: '"box" class-ı olan elementləri hansı selektor seçir?', o: ['#box', '.box', 'box', '*box'] },
       en: { q: 'Which selector matches elements with the class "box"?', o: ['#box', '.box', 'box', '*box'] },
     },
     {
@@ -156,7 +156,7 @@ export const QUESTIONS = {
     {
       id: 'css-9',
       a: 0,
-      az: { q: 'Ekran ölçüsünə görə stil yazmaq üçün hansı at-qayda istifadə olunur?', o: ['@media', '@import', '@font-face', '@keyframes'] },
+      az: { q: 'Hansı @-qayda (at-rule) ekran ölçüsünə görə stil yazmaq üçün istifadə olunur?', o: ['@media', '@import', '@font-face', '@keyframes'] },
       en: { q: 'Which at-rule is used to write styles for different screen sizes?', o: ['@media', '@import', '@font-face', '@keyframes'] },
     },
     {

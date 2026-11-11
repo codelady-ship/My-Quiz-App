@@ -71,6 +71,12 @@ describe('best score', () => {
     expect(updateBest({ css: 7 }, 'css', 9).best.css).toBe(9)
   })
 
+  it('does not call a first 0/10 round a new best', () => {
+    expect(updateBest({}, 'react', 0)).toEqual({ best: {}, isNew: false })
+    expect(updateBest({ react: 0 }, 'react', 0).isNew).toBe(false)
+    expect(updateBest({}, 'react', 1)).toEqual({ best: { react: 1 }, isNew: true })
+  })
+
   it('survives broken or blocked storage', () => {
     const broken = {
       getItem: () => {
