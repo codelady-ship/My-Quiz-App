@@ -93,9 +93,9 @@ describe('best score', () => {
 })
 
 describe('question bank', () => {
-  it('has at least 12 well-formed questions per category in both languages', () => {
+  it('has at least 20 well-formed questions per category in both languages', () => {
     for (const c of CATEGORIES) {
-      expect(QUESTIONS[c].length).toBeGreaterThanOrEqual(12)
+      expect(QUESTIONS[c].length).toBeGreaterThanOrEqual(20)
       for (const q of QUESTIONS[c]) {
         for (const lang of ['az', 'en']) {
           expect(q[lang].q.length).toBeGreaterThan(0)
@@ -106,5 +106,10 @@ describe('question bank', () => {
         expect(q.a).toBeLessThan(4)
       }
     }
+  })
+
+  it('uses unique question ids', () => {
+    const ids = CATEGORIES.flatMap((c) => QUESTIONS[c].map((q) => q.id))
+    expect(new Set(ids).size).toBe(ids.length)
   })
 })
