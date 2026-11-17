@@ -1,14 +1,19 @@
 // Client for the Express + MongoDB API in backend/.
-// The API URL comes from VITE_API_URL at build time, or from ?api=<url> for testing.
+// The API URL comes from VITE_API_URL at build time. For local testing, ?api=<url> also
+// works, but ONLY when the page runs on localhost: on the live site a crafted link must not
+// be able to send players' nicknames and answers to another server.
 // With no URL, or when the API does not answer within 8 s, the app uses the bundled
 // question bank (src/data/questions.js) and hides the online leaderboard.
 
 const TIMEOUT_MS = 8000
+const LOCAL_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 function readApiUrl() {
   let fromQuery = null
   try {
-    fromQuery = new URLSearchParams(globalThis.location?.search || '').get('api')
+    if (LOCAL_HOSTS.includes(globalThis.location?.hostname)) {
+      fromQuery = new URLSearchParams(globalThis.location.search || '').get('api')
+    }
   } catch {
     // no location (tests)
   }

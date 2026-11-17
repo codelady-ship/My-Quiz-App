@@ -67,7 +67,7 @@ npm run dev            # http://localhost:4000, an empty bank is seeded from src
 npm test               # API tests on an in-memory MongoDB
 ```
 
-Then open the frontend with `?api=http://localhost:4000` (for example `http://localhost:5173/?api=http://localhost:4000`), or start it with `VITE_API_URL=http://localhost:4000 npm run dev`.
+Then open the frontend with `?api=http://localhost:4000` (honoured only when the page runs on `localhost`/`127.0.0.1`; for example `http://localhost:5173/?api=http://localhost:4000`), or start it with `VITE_API_URL=http://localhost:4000 npm run dev`.
 
 ## Deployment
 
