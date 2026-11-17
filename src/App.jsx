@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { CATEGORIES, QUESTIONS } from './data/questions.js'
 import { LANGS, UI } from './i18n.js'
+import { loadQuestionBank } from './api.js'
+import Leaderboard from './Leaderboard.jsx'
 import {
   ROUND_SIZE,
   SECONDS_PER_QUESTION,
@@ -41,7 +43,23 @@ export default function App() {
   const [answers, setAnswers] = useState([])
   const [best, setBest] = useState(loadBest)
   const [isNewBest, setIsNewBest] = useState(false)
+  const [bank, setBank] = useState(QUESTIONS)
+  const [online, setOnline] = useState(false)
   const t = UI[lang]
+
+  // Use the API's question bank when it answers; otherwise keep the bundled one.
+  useEffect(() => {
+    let alive = true
+    loadQuestionBank().then((questions) => {
+      if (alive && questions) {
+        setBank(questions)
+        setOnline(true)
+      }
+    })
+    return () => {
+      alive = false
+    }
+  }, [])
 
   useEffect(() => {
     document.documentElement.lang = lang
@@ -54,7 +72,7 @@ export default function App() {
   }
 
   const startRound = () => {
-    setRound(buildRound(QUESTIONS[category], lang, ROUND_SIZE))
+    setRound(buildRound(bank[category]?.length ? bank[category] : QUESTIONS[category], lang, ROUND_SIZE))
     setAnswers([])
     setIsNewBest(false)
     setScreen('quiz')
@@ -106,6 +124,8 @@ export default function App() {
         {screen === 'results' && (
           <ResultsScreen
             t={t}
+            lang={lang}
+            online={online}
             category={category}
             round={round}
             answers={answers}
@@ -317,7 +337,7 @@ function QuizScreen({ t, category, round, onFinish }) {
   )
 }
 
-function ResultsScreen({ t, category, round, answers, best, isNewBest, onAgain, onHome }) {
+function ResultsScreen({ t, lang, online, category, round, answers, best, isNewBest, onAgain, onHome }) {
   const score = scoreRound(round, answers)
   const misses = wrongAnswers(round, answers)
   const headingRef = useRef(null)
@@ -366,6 +386,8 @@ function ResultsScreen({ t, category, round, answers, best, isNewBest, onAgain, 
           </ol>
         </div>
       )}
+
+      {online && <Leaderboard t={t} lang={lang} category={category} round={round} answers={answers} />}
 
       <div className="actions">
         <button type="button" className="btn btn-primary" onClick={onAgain}>
