@@ -3,6 +3,10 @@ export const LANGS = ['az', 'en']
 export const UI = {
   az: {
     appName: 'Kod Sınağı',
+    metaTitle: 'Kod Sınağı · HTML, CSS, JavaScript və React viktorinası',
+    metaDescription:
+      'Kod Sınağı: HTML, CSS, JavaScript və React üzrə pulsuz viktorina. Hər raundda 10 təsadüfi sual, hər sual üçün 20 saniyə və sonda səhvlərin siyahısı.',
+    quizHeading: (category) => `Kod Sınağı: ${category} viktorinası`,
     tagline: 'Veb inkişafı üzrə qısa viktorina',
     intro: 'Kateqoriya seç və 10 suala cavab ver. Hər sual üçün 20 saniyən var.',
     language: 'Dil',
@@ -48,6 +52,10 @@ export const UI = {
   },
   en: {
     appName: 'Code Check',
+    metaTitle: 'Code Check · HTML, CSS, JavaScript and React quiz',
+    metaDescription:
+      'Code Check: a free quiz on HTML, CSS, JavaScript and React in English or Azerbaijani. 10 random questions per round, 20 seconds each, and a review at the end.',
+    quizHeading: (category) => `Code Check: ${category} quiz`,
     tagline: 'A short web development quiz',
     intro: 'Pick a category and answer 10 questions. You have 20 seconds for each one.',
     language: 'Language',
