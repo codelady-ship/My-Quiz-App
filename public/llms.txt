@@ -1,0 +1,24 @@
+# Kod Sınağı · Code Check
+
+> A free bilingual (Azerbaijani / English) quiz on web development basics: HTML, CSS, JavaScript and React. Each round has 10 random questions from a bank of 20 per category, 20 seconds per question, keyboard shortcuts 1-4, and a review of the missed answers at the end. Best scores are kept in the browser.
+
+Built by codelady-ship with React and Vite. An optional Express + MongoDB API adds an online question bank and a leaderboard; without it the bundled questions are used.
+
+## Key pages
+
+- [Quiz (start screen, AZ/EN switch)](https://codelady-ship.github.io/My-Quiz-App/)
+- [Source code](https://github.com/codelady-ship/My-Quiz-App)
+
+## Categories
+
+- HTML (20 questions)
+- CSS (20 questions)
+- JavaScript (20 questions)
+- React (20 questions)
+
+Every question and answer option exists in both Azerbaijani and English.
+
+## Notes
+
+- Single-page app: there are no separate URLs per question or per language; the language switch changes the page text, <html lang>, title and description.
+- No sign-up, no ads, free to use.

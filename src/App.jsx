@@ -62,8 +62,10 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    // The language switch also switches the page language, title and description.
     document.documentElement.lang = lang
-    document.title = `${t.appName} · ${t.tagline}`
+    document.title = t.metaTitle
+    document.querySelector('meta[name="description"]')?.setAttribute('content', t.metaDescription)
   }, [lang, t])
 
   const changeLang = (next) => {
@@ -271,6 +273,7 @@ function QuizScreen({ t, category, round, onFinish }) {
 
   return (
     <section className="card quiz" aria-labelledby="q-text">
+      <h1 className="sr-only">{t.quizHeading(t.categories[category])}</h1>
       <div className="quiz-meta">
         <span className="pill">{t.categories[category]}</span>
         <span>{t.question(index + 1, round.length)}</span>

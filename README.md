@@ -22,7 +22,7 @@ A full-stack bilingual (AZ/EN) web-development quiz: a React + Vite frontend on 
 - **Online leaderboard** per category: save your score with a nickname and see the top 10 (best score per player). The server re-scores the round from the chosen answers, so a client cannot post a made-up score.
 - **Question bank in MongoDB**, editable through admin endpoints (JWT); `src/data/questions.js` is the seed and the offline copy.
 - Keyboard friendly (keys 1–4 pick an answer), light/dark theme, respects reduced motion, and works from 360 px phones to wide screens.
-- SEO: description, canonical URL, Open Graph/Twitter card, favicon and `sitemap.xml`.
+- SEO / GEO: title and description that follow the AZ/EN switch (together with `<html lang>`), canonical URL, Open Graph/Twitter card with a 1200x630 image (`public/og-image.png`), JSON-LD (WebSite, WebApplication, Quiz), `robots.txt`, `sitemap.xml` and `llms.txt`.
 
 ## Tech stack
 
