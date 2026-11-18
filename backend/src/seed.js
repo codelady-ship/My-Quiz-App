@@ -1,4 +1,5 @@
-// Fills the question bank from src/data/questions.js (the same file the frontend bundles as its offline copy).
+// Fills the question bank from src/data/questions.js (the same file the frontend bundles as its offline copy)
+// and creates/refreshes the public read-only demo admin (see lib/demoAdmin.js).
 // Usage: npm run seed            -> inserts only into an empty collection
 //        npm run seed -- --reset -> replaces all questions (scores are kept)
 const path = require("path");
@@ -7,18 +8,24 @@ const mongoose = require("mongoose");
 const config = require("./lib/config");
 const { connect } = require("./lib/db");
 const { Question } = require("./models");
+const { seedDemoAdmin } = require("./lib/demoAdmin");
 
 const BANK = path.join(__dirname, "..", "..", "src", "data", "questions.js");
 
 async function seed({ reset = false } = {}) {
   if (reset) await Question.deleteMany({});
-  if (await Question.estimatedDocumentCount()) return { questions: "skipped (not empty)" };
-  const { QUESTIONS } = await import(pathToFileURL(BANK).href);
-  const rows = Object.entries(QUESTIONS).flatMap(([category, items]) =>
-    items.map((q, i) => ({ qid: q.id, category, a: q.a, az: q.az, en: q.en, order: i }))
-  );
-  await Question.insertMany(rows);
-  return { questions: rows.length };
+  const out = {};
+  if (await Question.estimatedDocumentCount()) out.questions = "skipped (not empty)";
+  else {
+    const { QUESTIONS } = await import(pathToFileURL(BANK).href);
+    const rows = Object.entries(QUESTIONS).flatMap(([category, items]) =>
+      items.map((q, i) => ({ qid: q.id, category, a: q.a, az: q.az, en: q.en, order: i }))
+    );
+    await Question.insertMany(rows);
+    out.questions = rows.length;
+  }
+  out.demoAdmin = await seedDemoAdmin();
+  return out;
 }
 
 if (require.main === module) {
