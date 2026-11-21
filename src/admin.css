@@ -9,6 +9,16 @@
   min-height: 44px;
 }
 
+/* The quiz cards enter with `rise ... both`. With fill-mode `both` the finished animation still
+   applies, so Chrome keeps the whole card on its own compositor layer (transform + opacity
+   animation). Text on such a layer loses subpixel antialiasing and is resampled when the layer
+   lands on a fractional device pixel (125 % Windows scaling, or the page framed in an iframe),
+   which made the panel look soft and doubled. The admin card holds dense text and tables, so it
+   lets go of the animation once it has played. */
+.admin-shell .card {
+  animation-fill-mode: backwards;
+}
+
 .admin-login {
   max-width: 520px;
   margin: 0 auto;
