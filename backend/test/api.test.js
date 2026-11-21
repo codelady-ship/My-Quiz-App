@@ -86,3 +86,30 @@ test("admin: question CRUD and score moderation", async () => {
   assert.equal((await request(app).delete("/api/admin/questions/html-99").set(auth)).status, 204);
   assert.equal((await request(app).delete("/api/admin/scores/AYSEL").set(auth)).body.deleted, 2);
 });
+
+test("demo admin: seeded, can read, every write is blocked with 403", async () => {
+  const bad = await request(app).post("/api/auth/login").send({ email: "demo@codecheck.az", password: "wrong" });
+  assert.equal(bad.status, 401);
+  const login = await request(app).post("/api/auth/login").send({ email: "demo@codecheck.az", password: "demo1234" });
+  assert.equal(login.status, 200);
+  assert.equal(login.body.role, "demo");
+  const auth = { Authorization: `Bearer ${login.body.token}` };
+  const list = await request(app).get("/api/admin/questions").set(auth);
+  assert.equal(list.status, 200);
+  assert.ok(list.body.length >= 40);
+  const q = { qid: "html-97", category: "html", a: 0, az: { q: "Demo sual?", o: ["A", "B"] }, en: { q: "Demo question?", o: ["A", "B"] } };
+  const writes = [
+    request(app).post("/api/admin/questions").set(auth).send(q),
+    request(app).put("/api/admin/questions/html-1").set(auth).send({ ...q, qid: "html-1" }),
+    request(app).patch("/api/admin/questions/html-1").set(auth).send({ active: false }),
+    request(app).delete("/api/admin/questions/html-1").set(auth),
+    request(app).delete("/api/admin/scores/murad").set(auth),
+  ];
+  for (const res of await Promise.all(writes)) {
+    assert.equal(res.status, 403);
+    assert.match(res.body.error, /read-only/);
+  }
+  assert.ok((await request(app).get("/api/questions?category=html")).body.questions.html.some((x) => x.id === "html-1"));
+  const real = await request(app).post("/api/auth/login").send({ email: "admin@test.local", password: "test-password" });
+  assert.equal(real.body.role, "admin");
+});

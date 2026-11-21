@@ -29,8 +29,9 @@ function createBaseApp() {
 
   const loginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: "draft-7", legacyHeaders: false });
   const loginSchema = z.object({ email: z.string().email(), password: z.string().min(1) });
-  app.post("/api/auth/login", loginLimiter, validate(loginSchema), (req, res) => {
-    res.json({ token: login(req.body.email, req.body.password) });
+  // Answers { token, role }: role "admin" (full rights) or "demo" (read-only demo admin).
+  app.post("/api/auth/login", loginLimiter, validate(loginSchema), async (req, res) => {
+    res.json(await login(req.body.email, req.body.password));
   });
 
   return app;
